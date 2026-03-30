@@ -1,6 +1,6 @@
 const db = require("../config/db.js");
 
-const getBookings = async (req, res) => {
+const getUserBookings = async (req, res) => {
     const user_id = req.params.id;
     try {
         const [bookings] = await db.query(`SELECT * FROM bookings WHERE user_id = ?`, [user_id])
@@ -13,5 +13,5 @@ const getBookings = async (req, res) => {
 }
 
 module.exports = {
-    getBookings
+    getUserBookings
 }

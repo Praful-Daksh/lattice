@@ -6,6 +6,9 @@ const userRouter = require('./routes/userRoute.js');
 const bookingRouter = require('./routes/bookingRoute.js');
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const specs = require('./docs/swagger.js');
+
 app.use(cors());
 app.use(express.json());
 
@@ -16,6 +19,8 @@ app.get('/', (req, res) => {
 app.use('/events', eventRouter);
 app.use('/users', userRouter);
 app.use('/bookings', bookingRouter);
+
+app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(specs));
 
 
 module.exports = app;
