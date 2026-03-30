@@ -6,9 +6,17 @@ const createBooking = async (req, res) => {
     const connection = await db.getConnection();
     try {
         const { user_id, event_id } = req.body;
-        if(!user_id || !event_id){
+        if (!user_id || !event_id) {
             return res.status(400).json({
                 message: "missing details, please fill all details."
+            })
+        }
+
+        const [existing] = await connection.query(`select id from bookings where event_id = ? and user_id = ?`, [event_id, user_id]);
+
+        if (existing.length > 0) {
+            return res.status(400).json({
+                message: "You are already booked this event."
             })
         }
 
